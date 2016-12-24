@@ -1,0 +1,19 @@
+<li on:click='strikethrough(event)'>
+  {{ todo.name }}
+</li>
+<script>
+
+  export default {
+    data () {
+      return {}
+    },
+
+    methods: {
+      strikethrough (event) {
+        let elem = event.target;
+
+        elem.style.textDecoration = elem.style.textDecoration === 'line-through' ? '' : 'line-through';
+      }
+    }
+  };
+</script>

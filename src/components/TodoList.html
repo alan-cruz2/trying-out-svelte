@@ -1,0 +1,53 @@
+<input class="new-todo" on:enter='newTodo(event)' placeholder="What needs to be done?">
+<ul>
+  {{#each todos as todo}}
+    <Todo todo='{{ todo }}'></Todo>
+  {{/each}}
+</ul>
+
+<style>
+  .new-todo {
+    color: red;
+  }
+</style>
+
+<script>
+  import Todo from './Todo.html';
+
+  export default {
+    data () {
+      return {}
+    },
+
+    components: {
+      Todo
+    },
+
+    events: {
+      enter (node, callback) {
+        function KeyPress(event){
+          if( event.keyCode === 13 || event.which === 13){
+            callback(event);
+          };
+        }
+
+        node.addEventListener('keypress', KeyPress, false);
+
+        return {
+          teardown () {
+            node.removeEventListener('keypress', KeyPress, false);
+          }
+        }
+      }
+    },
+
+    methods: {
+      newTodo (event) {
+        let todos = this.get('todos');
+        todos.push({ name: event.target.value });
+
+        this.set({todos: todos});
+      }
+    }
+  };
+</script>
